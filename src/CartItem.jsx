@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeItem, updateQuantity } from './CartSlice';
 import './CartItem.css';
-import { removeItem, updateQuantity } from './CartSlice';
+
 
 const CartItem = ({ onContinueShopping }) => {
   const cart = useSelector(state => state.cart.items);
@@ -10,27 +10,42 @@ const CartItem = ({ onContinueShopping }) => {
 
   // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
- 
+    return cart.reduce((total, item)=> total + item.quantity * parseFloat(item.cost.replace("$", "")), 0)
   };
 
   const handleContinueShopping = (e) => {
-   
-  };
-
-
-
-  const handleIncrement = (item) => {
-  };
-
-  const handleDecrement = (item) => {
+    onContinueShopping(e);
    
   };
 
   const handleRemove = (item) => {
+    dispatch(removeItem(item.name));
   };
+
+  const handleIncrement = (item) => {
+      const quantity = item.quantity + 1;
+      const {name} = item;
+    dispatch(updateQuantity({name, quantity}));
+  };
+
+  const handleDecrement = (item) => {
+    if (item.quantity === 0){
+      handleRemove(item);
+    }
+    const quantity = item.quantity - 1
+      const {name} = item;
+    dispatch(updateQuantity({name, quantity}));
+  };
+
+
+  const handleCheckoutShopping = (e) => {
+    alert("Funtionality to be added for future reference")
+  }
 
   // Calculate total cost based on quantity for an item
   const calculateTotalCost = (item) => {
+    const cost = parseFloat(item.cost.replace("$", ""))
+    return parseInt(item.quantity) * cost
   };
 
   return (
@@ -58,7 +73,7 @@ const CartItem = ({ onContinueShopping }) => {
       <div className="continue_shopping_btn">
         <button className="get-started-button" onClick={(e) => handleContinueShopping(e)}>Continue Shopping</button>
         <br />
-        <button className="get-started-button1">Checkout</button>
+        <button className="get-started-button1" onClick={()=> handleCheckoutShopping()}>Checkout</button>
       </div>
     </div>
   );

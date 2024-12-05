@@ -250,3 +250,22 @@ body {
         text-align: center; /* Align text to the center */
       }
   }
+
+  .cart {
+    position: relative;
+    display: inline-block;
+}
+
+.total-items {
+    position: absolute;
+    top: 38%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Offset to center */
+    background-color: red; /* Optional: Make it stand out */
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 50%; /* Optional: Make it circular */
+    padding: 4px 6px; /* Adjust padding for size */
+    text-align: center;
+}
